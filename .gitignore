@@ -1,0 +1,4 @@
+src/model_training*
+.env
+myenv
+main.py
