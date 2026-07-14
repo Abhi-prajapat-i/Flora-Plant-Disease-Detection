@@ -21,7 +21,7 @@ def main():
     # Page Configuration
     # -------------------------
     st.set_page_config(
-        page_title="AI Plant Disease Detection",
+        page_title="Flora AI Plant Disease Detection",
         page_icon="🌿",
         layout="wide"
     )
@@ -93,6 +93,17 @@ def main():
             border-radius: 8px;
             font-weight: 600;
         }
+        .app-footer {
+            margin-top: 2.5rem;
+            padding: 1rem 0 0.5rem 0;
+            border-top: 1px solid #e3e8e3;
+            text-align: center;
+            color: #6b7a6b;
+            font-size: 0.9rem;
+        }
+        .app-footer b {
+            color: #2e7d32;
+        }
         </style>
         """,
         unsafe_allow_html=True,
@@ -105,7 +116,8 @@ def main():
     st.markdown(
         """
         <div class="main-header">
-            <h1>🌿 AI Plant Disease Detection & Treatment Advisor</h1>
+            <h1> 🌿 Flora</h1>
+            <h2>    Plant Disease Detection & Treatment Advisor</h2>
             <p>📷 Upload a plant leaf image to detect diseases and receive AI-powered treatment recommendations — fast, accurate, and easy to use.</p>
         </div>
         """,
@@ -151,7 +163,7 @@ def main():
             "The corresponding AI model will be used."
         )
 
-        st.caption("🌾 Powered by a crop-specific deep learning model.")
+        st.caption("🌾 Powered by Flora AI.")
 
     # -------------------------
     # Main Layout
@@ -231,6 +243,13 @@ def main():
                         predicted_class, confident = predection(image,model,prediction_class[crop])
                         st.session_state.disease = predicted_class
                         st.session_state.confidence = confident
+                    #Tomato plant
+                    if crop == "Tomato":
+                        model = keras.models.load_model("models/tomato_model.keras")
+                        predicted_class, confident = predection(image,model,prediction_class[crop])
+                        st.session_state.disease = predicted_class
+                        st.session_state.confidence = confident
+
 
                 st.success("✅ Prediction Complete")
 
@@ -338,6 +357,19 @@ def main():
                 )
 
                 st.experimental_rerun()
+
+    # -------------------------
+    # Footer
+    # -------------------------
+
+    st.markdown(
+        """
+        <div class="app-footer">
+            🌿 Developed by <b>Abhishek Kumar</b> — AI Learner.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 if __name__ == "__main__":
     main()
