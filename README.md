@@ -220,23 +220,23 @@ Additional languages can be integrated easily.
 ## 📸 Screenshots
 
 <p align="center">
-  <h2>Home Page</h2>
-  <img src="assets/screenshots/UI" width="70%" height="400">
+  <h2 align="src/center">Home Page</h2>
+  <img src="src/assets/screenshots/UI" width="70%" height="400">
 
   <br/><br/>
 
-  <h2 align="center">Results</h2>
+  <h2 align="src/center">Results</h2>
 
   <p align="center">
-    <img src="assets/screenshots/prediction.png" width="70%">
+    <img src="src/assets/screenshots/prediction.png" width="70%">
   </p>
 
   <p align="center">
-    <img src="assets\screenshots\hindi_advise.png" width="70%">
+    <img src="src/assets\screenshots\hindi_advise.png" width="70%">
   </p>
 
   <p align="center">
-    <img src="assets/screenshots/ENG_advise.png" width="70%">
+    <img src="src/assets/screenshots/ENG_advise.png" width="70%">
   </p>
 </p>
 
