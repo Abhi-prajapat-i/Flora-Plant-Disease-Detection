@@ -220,15 +220,19 @@ Additional languages can be integrated easily.
 ## 📸 Screenshots
 
 <p align="center">
+
   <h2 align="src/center">Home Page</h2>
-  <img src="src/assets/screenshots/UI.png" width="50%">
+  
+  <p align="center">
+    <img src="src/assets/screenshots/UI.png" width="70%">
+  </p>
 
   <br/><br/>
 
   <h2 align="src/center">Results</h2>
 
   <p align="center">
-    <img src="src/assets/screenshots/prediction.png" width="50%">
+    <img src="src/assets/screenshots/prediction.png" width="70%">
   </p>
 
   <p align="center">
