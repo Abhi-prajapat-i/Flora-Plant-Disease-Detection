@@ -6,7 +6,18 @@ from tensorflow import keras
 import numpy as np
 from PIL import Image
 from LLM import llm
-from prompt_maker import get_prompt
+from prompt_maker import get_prompt, build_chat_messages , MAX_HISTORY_MESSAGES
+from report_maker import generate_recommendation_pdf
+
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+
+import io
+import re
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer
 
 
 def main():
@@ -17,19 +28,26 @@ def main():
     if "confidence" not in st.session_state:
         st.session_state.confidence = 0.0
 
-    # -------------------------
+    if "treatment_advice" not in st.session_state:
+        st.session_state.treatment_advice = ""
+
+    if "messages" not in st.session_state:
+        st.session_state.messages = []
+
+   
+
     # Page Configuration
-    # -------------------------
+   
     st.set_page_config(
         page_title="Flora AI Plant Disease Detection",
         page_icon="🌿",
         layout="wide"
     )
 
-    # -------------------------
-    # Global Styling (native Streamlit-compatible CSS)
-    # -------------------------
 
+
+    # Global Styling 
+   
     st.markdown(
         """
         <style>
@@ -109,10 +127,10 @@ def main():
         unsafe_allow_html=True,
     )
 
-    # -------------------------
-    # Header
-    # -------------------------
 
+   
+    # Header
+   
     st.markdown(
         """
         <div class="main-header">
@@ -124,10 +142,10 @@ def main():
         unsafe_allow_html=True,
     )
 
-    # -------------------------
-    # Sidebar
-    # -------------------------
+   
 
+    # Sidebar
+   
     with st.sidebar:
 
         st.header("⚙️ Settings")
@@ -165,16 +183,14 @@ def main():
 
         st.caption("🌾 Powered by Flora AI.")
 
-    # -------------------------
+
     # Main Layout
-    # -------------------------
 
     left, right = st.columns([1, 1], gap="large")
 
-    # -------------------------
+   
     # Upload Section
-    # -------------------------
-
+   
     with left:
 
         st.subheader("📤 Upload Leaf Image")
@@ -197,11 +213,10 @@ def main():
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # -------------------------
+
+
     # Prediction Section
-    # -------------------------
-
-
+  
     def predection(image, model, classes_name):
         
         image = image.convert("RGB")
@@ -235,7 +250,7 @@ def main():
                 "🔎 Predict Disease",
                 type="primary",
             ):
-                
+                # select the model according to the user.
                 with st.spinner("Loading model..."):
                     #potato plant.
                     if crop == "Potato":
@@ -250,6 +265,8 @@ def main():
                         st.session_state.disease = predicted_class
                         st.session_state.confidence = confident
 
+                    st.session_state.treatment_advice = ""
+                    st.session_state.messages = []
 
                 st.success("✅ Prediction Complete")
 
@@ -257,11 +274,9 @@ def main():
 
                 st.markdown('<div class="result-card">', unsafe_allow_html=True)
 
-                m1, m2 = st.columns(2)
-                with m1:
-                    st.metric("🌱 Crop", crop)
-                with m2:
-                    st.metric("🦠 Disease", st.session_state.disease)
+                st.metric("🌱 Crop", crop)
+        
+                st.metric("🦠 Disease", st.session_state.disease)
 
                 st.markdown("**🎯 Confidence Score**")
                 st.progress(min(int(st.session_state.confidence), 100))
@@ -273,6 +288,7 @@ def main():
 
     st.markdown("---")
 
+    # Generate the AI Recommendation.
     if ai:
 
         st.subheader("🌾 AI Treatment Recommendation")
@@ -284,24 +300,39 @@ def main():
                 with st.spinner("Generating recommendation..."):
                     prompt = get_prompt(crop, language, st.session_state.disease)
                     response = llm.invoke(prompt)
-                    
-                with st.expander(
-                    "🌾 AI Treatment Advice",
-                    expanded=True,
-                ):
-
-                    st.markdown(response.content)
+                    st.session_state.treatment_advice = response.content
             else:
                 st.warning(
                         "⚠️ Please upload a leaf image and predict the disease before requesting AI recommendations."
                 )
 
-    if st.session_state.disease :
-        instruct = "give one line answer."
-        # Store chat history
-        if "messages" not in st.session_state:
-            st.session_state.messages = []
+       
+       # Generate recommendation report.
+        if st.session_state.treatment_advice:
 
+            with st.expander(
+                "🌾 AI Treatment Advice",
+                expanded=True,
+            ):
+
+                st.markdown(st.session_state.treatment_advice)
+
+            pdf_buffer = generate_recommendation_pdf(
+                crop=crop,
+                disease=st.session_state.disease,
+                confidence=st.session_state.confidence,
+                treatment_advice=st.session_state.treatment_advice,
+            )
+
+            st.download_button(
+                label="📄 Download Report as PDF",
+                data=pdf_buffer,
+                file_name=f"{crop}_{st.session_state.disease}_treatment_report.pdf",
+                mime="application/pdf",
+            )
+
+    if st.session_state.disease :
+        
         st.markdown("---")
         st.subheader("💬 Discuss This Recommendation")
 
@@ -312,9 +343,6 @@ def main():
         )
 
         if discussion == "Yes":
-
-            if "messages" not in st.session_state:
-                st.session_state.messages = []
 
             st.markdown('<div class="section-card">', unsafe_allow_html=True)
 
@@ -346,15 +374,26 @@ def main():
 
             if submitted and question.strip():
 
+                # Build a memory aware message list: system context
+                chat_messages = build_chat_messages(
+                    crop=crop,
+                    disease=st.session_state.disease,
+                    treatment_advice=st.session_state.treatment_advice,
+                    history=st.session_state.messages,
+                    question=question,
+                )
+
+                response = llm.invoke(chat_messages).content
+
                 st.session_state.messages.append(
                     {"role": "user", "content": question}
                 )
 
-                response = llm.invoke(question+instruct).content
-
                 st.session_state.messages.append(
                     {"role": "assistant", "content": response}
                 )
+
+                st.session_state.messages = st.session_state.messages[-MAX_HISTORY_MESSAGES:]
 
                 st.experimental_rerun()
 

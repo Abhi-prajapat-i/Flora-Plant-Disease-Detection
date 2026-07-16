@@ -1,3 +1,7 @@
+MAX_HISTORY_MESSAGES = 10
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
+
 def get_prompt(crop, language, disease):
     prompt = f"""
         You are an agricultural expert.
@@ -40,3 +44,37 @@ def get_prompt(crop, language, disease):
         - Recommend only safe, commonly accepted practices and remind users to follow product labels and local agricultural guidelines.
         """
     return prompt
+
+
+def build_chat_messages(crop, disease, treatment_advice, history, question):
+    """
+    Build a LangChain message list that gives the LLM:
+    1) A system message anchoring it to the diagnosed crop/disease and the
+       treatment advice already given (so it never forgets the recommendation).
+    2) The last MAX_HISTORY_MESSAGES turns of the conversation (short-term memory).
+    3) The new user question.
+    """
+
+    system_content = (
+        f"You are Flora, an AI plant treatment advisor.\n"
+        f"Crop: {crop}\n"
+        f"Diagnosed Disease: {disease}\n"
+        f"Treatment advice already given to the user:\n{treatment_advice or 'Not generated yet.'}\n\n"
+        "Always stay consistent with this diagnosis and the treatment advice above. "
+        f"Answer in one line."
+    )
+
+    messages = [SystemMessage(content=system_content)]
+
+    # Keep only the last MAX_HISTORY_MESSAGES messages for short-term memory
+    recent_history = history[-MAX_HISTORY_MESSAGES:]
+
+    for msg in recent_history:
+        if msg["role"] == "user":
+            messages.append(HumanMessage(content=msg["content"]))
+        else:
+            messages.append(AIMessage(content=msg["content"]))
+
+    messages.append(HumanMessage(content=question))
+
+    return messages

@@ -27,6 +27,7 @@ Flora is designed to assist farmers, gardeners, and agriculture enthusiasts by p
 - 🌿 Organic treatment recommendations
 - 🛡️ Disease prevention tips
 - 🌞 Plant care guidance
+- 📄 Downloadable PDF diagnosis report
 - ⚡ Modern Streamlit interface
 
 ---
@@ -76,7 +77,7 @@ Flora/
 │   ├── app.py                     # Streamlit application
 │   ├── main.py                    # Main prediction logic
 │   ├── LLM.py                     # AI recommendation module
-│   ├── prompt.py                  # LLM prompt
+│   ├── report_maker.py            # Diagnosis report builder
 │   ├── prompt_maker.py            # Dynamic prompt builder
 │   └── plant_and_crops_name.py    # Plant & disease information
 │
@@ -93,7 +94,7 @@ Flora/
 ## Clone Repository
 
 ```bash
-git clone https://github.com/Abhi-prajapat-i/flora-plant-disease-detection.git
+git clone https://github.com/Abhi-prajapat-i/Flora-Plant-Disease-Detection.git
 ```
 
 ## Navigate to Project
