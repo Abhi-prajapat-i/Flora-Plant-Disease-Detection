@@ -221,7 +221,7 @@ Additional languages can be integrated easily.
 
 <p align="center">
   <h2 align="src/center">Home Page</h2>
-  <img src="src/assets/screenshots/UI" width="50%">
+  <img src="src/assets/screenshots/UI.png" width="50%">
 
   <br/><br/>
 
