@@ -221,14 +221,14 @@ Additional languages can be integrated easily.
 
 <p align="center">
   <h2 align="src/center">Home Page</h2>
-  <img src="src/assets/screenshots/UI" width="70%" height="400">
+  <img src="src/assets/screenshots/UI" width="50%">
 
   <br/><br/>
 
   <h2 align="src/center">Results</h2>
 
   <p align="center">
-    <img src="src/assets/screenshots/prediction.png" width="70%">
+    <img src="src/assets/screenshots/prediction.png" width="50%">
   </p>
 
   <p align="center">
