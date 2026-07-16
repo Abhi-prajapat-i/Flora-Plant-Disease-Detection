@@ -217,11 +217,28 @@ Additional languages can be integrated easily.
 
 # 📷 Screenshots
 
-Screenshots of the application are available inside:
+## 📸 Screenshots
 
-```
-src/assets/screenshot/
-```
+<p align="center">
+  <h2>Home Page</h2>
+  <img src="assets/screenshots/UI" width="70%" height="400">
+
+  <br/><br/>
+
+  <h2 align="center">Results</h2>
+
+  <p align="center">
+    <img src="assets/screenshots/prediction.png" width="70%">
+  </p>
+
+  <p align="center">
+    <img src="assets\screenshots\hindi_advise.png" width="70%">
+  </p>
+
+  <p align="center">
+    <img src="assets/screenshots/ENG_advise.png" width="70%">
+  </p>
+</p>
 
 ---
 
