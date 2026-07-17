@@ -258,9 +258,15 @@ def main():
                         predicted_class, confident = predection(image,model,prediction_class[crop])
                         st.session_state.disease = predicted_class
                         st.session_state.confidence = confident
-                    #Tomato plant
+                    #Tomato plant.
                     if crop == "Tomato":
                         model = keras.models.load_model("models/tomato_model.keras")
+                        predicted_class, confident = predection(image,model,prediction_class[crop])
+                        st.session_state.disease = predicted_class
+                        st.session_state.confidence = confident
+                    #Grape plant.
+                    if crop == "Grape":
+                        model = keras.models.load_model("models/grapes_model.keras")
                         predicted_class, confident = predection(image,model,prediction_class[crop])
                         st.session_state.disease = predicted_class
                         st.session_state.confidence = confident

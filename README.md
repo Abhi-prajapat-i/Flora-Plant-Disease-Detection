@@ -179,6 +179,7 @@ Currently implemented:
 
 - 🥔 Potato
 - 🍅 Tomato
+- 🍇 Grapes (New)
 
 More crops can be added by simply placing a trained model inside the **models/** directory.
 

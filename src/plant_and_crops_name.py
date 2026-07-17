@@ -8,18 +8,22 @@ languages = [
         ]
 
 # Plant disease name.
+# --> Potato
 potato_class = ['Early blight', 'Late_blight', 'Healthy leaf']
+# --> Tomato
 tomato_class = [
     "Bacterial Spot","Early Blight","Healthy","Late Blight","Leaf Mold",
     "Septoria Leaf Spot","Two-Spotted Spider Mite","Target Spot","Tomato Yellow Leaf Curl Virus"
 ]
+# --> Grape
+grape_class = ["Black Rot Disease","Esca (Grapevine Trunk Disease)","Healthy Leaf","Leaf Blight Disease"]
 
 prediction_class = {
             "Potato" : potato_class,
             "Tomato" : tomato_class,
             "Apple" : 2,
             "Corn" : 2,
-            "Grape" : 2,
+            "Grape" : grape_class,
             "Pepper" : 3,
             "Peach" : 4,
             "Cherry" : 4,
