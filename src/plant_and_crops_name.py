@@ -17,11 +17,13 @@ tomato_class = [
 ]
 # --> Grape
 grape_class = ["Black Rot Disease","Esca (Grapevine Trunk Disease)","Healthy Leaf","Leaf Blight Disease"]
+# --> Apple
+apple_class = ["Apple Scab Disease","Black Rot Disease","Cedar Apple Rust Disease","Healthy Apple Leaf"]
 
 prediction_class = {
             "Potato" : potato_class,
             "Tomato" : tomato_class,
-            "Apple" : 2,
+            "Apple" : apple_class,
             "Corn" : 2,
             "Grape" : grape_class,
             "Pepper" : 3,
