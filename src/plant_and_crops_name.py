@@ -19,12 +19,14 @@ tomato_class = [
 grape_class = ["Black Rot Disease","Esca (Grapevine Trunk Disease)","Healthy Leaf","Leaf Blight Disease"]
 # --> Apple
 apple_class = ["Apple Scab Disease","Black Rot Disease","Cedar Apple Rust Disease","Healthy Apple Leaf"]
+# --> Corn 
+corn_class = ["Gray Leaf Spot","Common Rust","Northern Leaf Blight","Healthy"]
 
 prediction_class = {
             "Potato" : potato_class,
             "Tomato" : tomato_class,
             "Apple" : apple_class,
-            "Corn" : 2,
+            "Corn" : corn_class,
             "Grape" : grape_class,
             "Pepper" : 3,
             "Peach" : 4,
