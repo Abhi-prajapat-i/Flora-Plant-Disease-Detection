@@ -282,7 +282,12 @@ def main():
                         predicted_class, confident = predection(image,model,prediction_class[crop])
                         st.session_state.disease = predicted_class
                         st.session_state.confidence = confident
-
+                    #Weath Crop.
+                    if crop == "Wheat":
+                        model = keras.models.load_model("models/wheat_model.keras")
+                        predicted_class, confident = predection(image,model,prediction_class[crop])
+                        st.session_state.disease = predicted_class
+                        st.session_state.confidence = confident
 
                     st.session_state.treatment_advice = ""
                     st.session_state.messages = []
