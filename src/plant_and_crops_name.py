@@ -1,6 +1,6 @@
 crops_plant_name = [
         "Potato","Tomato","Apple","Corn","Grape","Pepper","Peach",
-        "Cherry","Soybean","Strawberry","Wheat"
+        "Cherry","Soybean","Strawberry","Wheat","Rice"
         ]
 
 languages = [
@@ -23,6 +23,9 @@ apple_class = ["Apple Scab Disease","Black Rot Disease","Cedar Apple Rust Diseas
 corn_class = ["Gray Leaf Spot","Common Rust","Northern Leaf Blight","Healthy"]
 # --> Weath
 wheat_class = ['Wheat Brown Rust', 'Healthy', 'Wheat Yellow Rust']
+# --> Rice 
+rice_class =  ['Rice Bacterial Leaf Blight','Rice Brown Spot','Healthy Rice Leaf','Rice Leaf Blast','Rice Leaf Scald',
+    'Rice Narrow Brown Leaf Spot','Rice Hispa','Rice Sheath Blight']
 
 prediction_class = {
             "Potato" : potato_class,
@@ -31,6 +34,7 @@ prediction_class = {
             "Corn" : corn_class,
             "Grape" : grape_class,
             "Wheat" : wheat_class,
+            "Rice" : rice_class,
             "Pepper" : 3,
             "Peach" : 4,
             "Cherry" : 4,
