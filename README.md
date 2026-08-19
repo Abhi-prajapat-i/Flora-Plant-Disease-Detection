@@ -43,7 +43,7 @@ Flora is designed to assist farmers, gardeners, and agriculture enthusiasts by p
 - CNN
 
 ### AI Recommendation
-- llama-3.3-70b-versatile
+- openai/gpt-oss-120b
 
 ### Image Processing
 - NumPy
