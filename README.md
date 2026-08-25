@@ -217,8 +217,6 @@ Additional languages can be integrated easily.
 
 ---
 
-# 📷 Screenshots
-
 ## 📸 Screenshots
 
 <p align="center">
